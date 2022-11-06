@@ -1,4 +1,4 @@
-﻿#Include, CaptureScreen.ahk ; assumes it's in the same folder as script
+﻿#Include, ../CaptureScreen.ahk ; assumes it's in the same folder as script
 
 AppTitle := "runa-re"
 UniqueID := WinExist(AppTitle)

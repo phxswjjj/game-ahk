@@ -1,6 +1,6 @@
 ﻿#Include, CaptureScreen.ahk ; assumes it's in the same folder as script
 
-AppTitle := "BlueStacks App Player"
+AppTitle := "runa-re"
 UniqueID := WinExist(AppTitle)
 if not UniqueID {
     OutputDebug, "[%AppTitle%] not found"

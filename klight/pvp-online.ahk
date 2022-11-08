@@ -1,12 +1,33 @@
 ﻿#Include, ../CaptureScreen.ahk ; assumes it's in the same folder as script
 
 AppTitle := "klight"
+IsPVPTime := False
 UniqueID := WinExist(AppTitle)
 if not UniqueID {
     OutputDebug, "[%AppTitle%] not found"
     Return
 }
 
+If (A_Hour=12) or (A_Hour=21)
+{
+    IsPVPTime := True
+}
+
+SetTimer, CheckTimeJob, 1000
+
+Return
+
+CheckTimeJob:
+    If (A_Hour=13) or (A_Hour=22)
+    {
+        IsPVPTime := False
+        TraceLog("PVP time is over")
+        ExitApp
+    }
+    Else If (A_Hour=12) or (A_Hour=21)
+    {
+        IsPVPTime := True
+    }
 Return
 
 TraceLog(msg) {
@@ -87,6 +108,11 @@ IsPVPEnd() {
 
     While True
     {
+        If Not IsPVPTime
+        {
+            Sleep, 1000
+            Continue
+        }
         IfWinNotActive, ahk_id %UniqueID%
         {
             WinActivate, ahk_id %UniqueID%
@@ -98,7 +124,7 @@ IsPVPEnd() {
         If IsStartMatch()
         {
             Click, 1663, 859
-            Sleep, 20000
+            Sleep, 30000
         }
 
         ; 戰鬥中，投降

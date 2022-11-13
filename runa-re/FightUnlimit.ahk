@@ -60,10 +60,15 @@ SetFightRepeat() {
         Return False
     }
 
-    PixelGetColor, color, 538, 845
-    If color = 0xCCFF92
+    ; 因有流光效果影響判斷
+    Loop, 3
     {
-        Return True
+        PixelGetColor, color, 538, 845
+        If color = 0xCCFF92
+        {
+            Return True
+        }
+        Sleep, 100
     }
     TakeScreenshot(538, 845)
     TraceLog(Format("(538, 845) is {1}", color))

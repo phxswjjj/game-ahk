@@ -172,6 +172,31 @@ IsMap() {
     Return True
 }
 
+IsMsgbox() {
+    WinActivate, ahk_id %UniqueID%
+    PixelGetColor, color, 841, 471
+    if color != 0x595A49
+    {
+        Return False
+    }
+    PixelGetColor, color, 1053, 460
+    if color != 0x595A49
+    {
+        Return False
+    }
+    PixelGetColor, color, 1017, 761
+    if color != 0x615C4D
+    {
+        Return False
+    }
+    PixelGetColor, color, 831, 786
+    if color != 0x555140
+    {
+        Return False
+    }
+    Return True
+}
+
 ^!x:: ; Control+Alt+X hotkey.
     TraceLog("Start")
     
@@ -206,7 +231,21 @@ IsMap() {
         {
             ; 等行動力恢復、關閉行動力視窗
             TraceLog("等行動力恢復")
-            Sleep, 48 * 60 * 1000
+            Sleep, 180 * 60 * 1000
+
+            ; 有 msgbox 要按掉
+            Loop, 10
+            {
+                If IsMsgbox()
+                {
+                    TraceLog("Skip Msgbox")
+                    Click, 831, 786
+                    Sleep, 200
+                    Continue
+                }
+                Break
+            }
+
             WinActivate, ahk_id %UniqueID%
             Click, 1553, 395
 
@@ -267,6 +306,7 @@ IsMap() {
 
         Sleep, 60 * 1000
     }
+    TakeScreenshot(0, 0)
     TraceLog("Exit While")
 
 Return

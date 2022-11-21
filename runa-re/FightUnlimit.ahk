@@ -233,6 +233,12 @@ IsMsgbox() {
             TraceLog("等行動力恢復")
             Sleep, 180 * 60 * 1000
 
+            If IsDesktop()
+            {
+                TraceLog("App is Crash, Try Again")
+                Continue
+            }
+
             ; 有 msgbox 要按掉
             Loop, 10
             {

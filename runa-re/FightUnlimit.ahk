@@ -273,6 +273,7 @@ IsMsgbox() {
         ; app crash
         Else If IsDesktop()
         {
+            TraceLog("App is Crash")
             Click, 1651, 200
             Loop, 1000
             {
@@ -280,15 +281,32 @@ IsMsgbox() {
                 If IsGameStart()
                     Break
             }
+            ; 點擊開始
             Click, 935, 868
-            Loop, 1000
+            
+            ; 等待讀取(全黑)
+            Loop, 10
             {
-                Sleep, 100
-                If IsActivity()
+                Sleep, 1000
+                PixelGetColor, color, 383, 496
+                if color != 0x000000
                     Break
             }
-            Click, 1726, 97
-            Sleep, 1000
+
+            ; 關閉多個活動視窗
+            Loop, 1000
+            {
+                Sleep, 1000
+                If IsActivity()
+                {
+                    TraceLog("close Activity")
+                    Click, 1726, 97
+                    Continue
+                }
+                Break
+            }
+
+            Click, 944, 537
             If Not IsMap()
             {
                 TraceLog("is not map")

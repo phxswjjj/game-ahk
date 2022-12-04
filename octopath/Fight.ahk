@@ -1,6 +1,6 @@
 #Include, ../CaptureScreen.ahk ; assumes it's in the same folder as script
 
-AppTitle := "klight"
+AppTitle := "octopath"
 IsPVPTime := False
 UniqueID := WinExist(AppTitle)
 if not UniqueID {
@@ -48,11 +48,43 @@ IsFightingResult() {
 }
 IsOutside() {
     PixelGetColor, color, 1558, 223
-    If (color != 0x7ED5E2 and color != 0x74C2CE and color != 0x7DD4E1)
+    If (color != 0x7ED5E2 and color != 0x74C2CE and color != 0x7DD4E1
+        and color != 0x7ED4E1 and color != 0x72BFCB)
     {
         Return False
     }
     Return True
+}
+RunLeftRight() {
+    Loop, 6
+    {
+        If not IsOutside()
+            Break
+        
+        If Mod(A_Index, 2) = 0
+            MouseClickDrag, left, 100, 200, 200, 200
+        Else
+            MouseClickDrag, left, 200, 200, 100, 200
+        Sleep, 4000
+    }
+}
+MapLv7() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 814, 567
+    If (color == 0x909090)
+    {
+        Click, 814, 567
+    }
+    else
+    {
+        Click, 1183, 820
+    }
+    Sleep, 3000
 }
 
 ^!x:: ; Control+Alt+X hotkey.
@@ -64,7 +96,6 @@ IsOutside() {
         If IsFighting()
         {
             OutputDebug, is fighting
-            ; detect fight and click
             Click, 1104, 933
             Sleep, 200
             Click, 1262, 921
@@ -75,7 +106,6 @@ IsOutside() {
         If IsFightingResult()
         {
             OutputDebug, is fighting result
-            ; click 2 times
             Loop, 3
             {
                 Click, 1351, 783
@@ -85,18 +115,11 @@ IsOutside() {
         If IsOutside()
         {
             OutputDebug, is outside
-            ; run left and right
-            Loop, 6
-            {
-                If not IsOutside()
-                    Break
-                
-                If Mod(A_Index, 2) = 0
-                    MouseClickDrag, left, 100, 200, 200, 200
-                Else
-                    MouseClickDrag, left, 200, 200, 100, 200
-                Sleep, 4000
-            }
+            ; 左右移動
+            ; RunLeftRight()
+
+            ; 冰雪之地區域-恩波格洛雪道
+            MapLv7()
         }
         
         Sleep, 1000

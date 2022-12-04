@@ -12,8 +12,8 @@ Return
 
     Loop, 100
     {
-        PixelGetColor, color, 1558, 223
-        OutputDebug, (1558, 223) is %color%
+        PixelGetColor, color, 373, 849
+        OutputDebug, (373, 849) is %color%
         Sleep, 200
     }
     

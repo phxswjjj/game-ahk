@@ -1,12 +1,13 @@
 #Include, ../CaptureScreen.ahk ; assumes it's in the same folder as script
 
 AppTitle := "octopath"
-IsPVPTime := False
 UniqueID := WinExist(AppTitle)
 if not UniqueID {
     OutputDebug, "[%AppTitle%] not found"
     Return
 }
+
+global MapType := "unknown"
 
 Return
 
@@ -68,6 +69,59 @@ RunLeftRight() {
         Sleep, 4000
     }
 }
+DetectMap() {
+    If (MapType != "unknown")
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+
+    PixelGetColor, color, 966, 473
+    PixelGetColor, color2, 730, 698
+    TraceLog(color)
+    If ((color == 0x909090 or color == 0x7ED5E2) and color2 == 0x909090)
+        MapType := "MapLv9"
+
+    PixelGetColor, color, 1161, 594
+    PixelGetColor, color2, 551, 459
+    If ((color == 0x909090 or color == 0x7ED5E2) and color2 == 0x909090)
+        MapType := "MapLv1"
+
+    PixelGetColor, color, 814, 567
+    PixelGetColor, color2, 1183, 820
+    If ((color == 0x909090 or color == 0x7ED5E2) and color2 == 0x909090)
+        MapType := "MapLv7"
+
+    PixelGetColor, color, 1023, 386
+    PixelGetColor, color2, 1029, 669
+    If ((color == 0x909090 or color == 0x7ED5E2) and color2 == 0x909090)
+        MapType := "MapLv9L"
+
+    Click, 1777, 67
+    Sleep, 1000
+
+    If (MapType == "unknown")
+        MapType := "NA"
+    TraceLog(Format("MapType={1}", MapType))
+}
+MapLv9() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 966, 473
+    If (color == 0x909090)
+    {
+        Click, 966, 473
+    }
+    else
+    {
+        Click, 730, 698
+    }
+    Sleep, 3000
+}
 MapLv1() {
     PixelGetColor, color, 373, 849
     If ((color & 0xF0F0F0) != 0xF0F0F0 )
@@ -104,21 +158,21 @@ MapLv7() {
     }
     Sleep, 3000
 }
-MapLv9() {
+MapLv9L() {
     PixelGetColor, color, 373, 849
     If ((color & 0xF0F0F0) != 0xF0F0F0 )
         Return
 
     Click, 1558, 223
     Sleep, 1000
-    PixelGetColor, color, 966, 473
+    PixelGetColor, color, 1023, 386
     If (color == 0x909090)
     {
-        Click, 966, 473
+        Click, 1023, 386
     }
     else
     {
-        Click, 730, 698
+        Click, 1029, 669
     }
     Sleep, 3000
 }
@@ -151,6 +205,23 @@ MapLv9() {
         If IsOutside()
         {
             OutputDebug, is outside
+            
+            DetectMap()
+            Switch (MapType) {
+                Case "MapLv9":
+                    ; 冰雪之地區域-恩波格洛研究所前
+                    MapLv9()
+                Case "MapLv1":
+                    ; 冰雪之地區域-恩波格洛研究所
+                    MapLv1()
+                Case "MapLv7":
+                    ; 冰雪之地區域-恩波格洛雪道
+                    MapLv7()
+                Case "MapLv9L":
+                    ; 冰雪之地區域-西恩波格洛雪道
+                    MapLv9L()
+            }
+            
             ; 左右移動
             ; RunLeftRight()
 
@@ -161,7 +232,7 @@ MapLv9() {
             ; MapLv1()
 
             ; 冰雪之地區域-恩波格洛雪道
-            MapLv7()
+            ; MapLv7()
         }
         
         Sleep, 1000

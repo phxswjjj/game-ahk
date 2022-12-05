@@ -68,6 +68,24 @@ RunLeftRight() {
         Sleep, 4000
     }
 }
+MapLv1() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 1161, 594
+    If (color == 0x909090)
+    {
+        Click, 1161, 594
+    }
+    else
+    {
+        Click, 551, 459
+    }
+    Sleep, 3000
+}
 MapLv7() {
     PixelGetColor, color, 373, 849
     If ((color & 0xF0F0F0) != 0xF0F0F0 )
@@ -83,6 +101,24 @@ MapLv7() {
     else
     {
         Click, 1183, 820
+    }
+    Sleep, 3000
+}
+MapLv9() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 966, 473
+    If (color == 0x909090)
+    {
+        Click, 966, 473
+    }
+    else
+    {
+        Click, 730, 698
     }
     Sleep, 3000
 }
@@ -117,6 +153,12 @@ MapLv7() {
             OutputDebug, is outside
             ; 左右移動
             ; RunLeftRight()
+
+            ; 冰雪之地區域-恩波格洛研究所前
+            ; MapLv9()
+
+            ; 冰雪之地區域-恩波格洛研究所
+            ; MapLv1()
 
             ; 冰雪之地區域-恩波格洛雪道
             MapLv7()

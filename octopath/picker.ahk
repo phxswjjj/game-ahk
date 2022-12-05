@@ -2,6 +2,13 @@
 
 #InstallKeybdHook
 
+AppTitle := "octopath"
+UniqueID := WinExist(AppTitle)
+if not UniqueID {
+    OutputDebug, "[%AppTitle%] not found"
+    Return
+}
+
 TraceLog(msg) {
     FormatTime, CurrentDateTime,, HH:mm:ss
     OutputDebug, [%CurrentDateTime%] %msg%
@@ -9,11 +16,12 @@ TraceLog(msg) {
 Return
 
 ^!x:: ; Control+Alt+X hotkey.
+    WinActivate, ahk_id %UniqueID%
 
     Loop, 100
     {
-        PixelGetColor, color, 373, 849
-        OutputDebug, (373, 849) is %color%
+        PixelGetColor, color, 853, 759
+        OutputDebug, (853, 759) is %color%
         Sleep, 200
     }
     

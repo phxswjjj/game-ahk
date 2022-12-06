@@ -106,8 +106,8 @@ DetectMap() {
     If (color in 0x909090,0x7ED5E2 and color2 in 0x909090,0x7ED5E2)
         MapType := "MapLv9L2"
 
-    PixelGetColor, color, 869, 440
-    PixelGetColor, color2, 1054, 829
+    PixelGetColor, color, 953, 503
+    PixelGetColor, color2, 755, 662
     If (color in 0x909090,0x7ED5E2 and color2 in 0x909090,0x7ED5E2)
         MapType := "MapLv9L3"
 
@@ -233,14 +233,14 @@ MapLv9L3() {
 
     Click, 1558, 223
     Sleep, 1000
-    PixelGetColor, color, 1224, 469
+    PixelGetColor, color, 953, 503
     If (color == 0x909090)
     {
-        Click, 1224, 469
+        Click, 953, 503
     }
     else
     {
-        Click, 1054, 829
+        Click, 755, 662
     }
     Sleep, 3000
 }

@@ -241,7 +241,7 @@ MapLv9L3() {
     }
     else
     {
-        Click, 668, 655
+        Click, 1058, 831
     }
     Sleep, 3000
 }

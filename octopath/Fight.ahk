@@ -97,6 +97,11 @@ DetectMap() {
     If ((color == 0x909090 or color == 0x7ED5E2) and color2 == 0x909090)
         MapType := "MapLv9L"
 
+    PixelGetColor, color, 951, 507
+    PixelGetColor, color2, 1148, 737
+    If ((color == 0x909090 or color == 0x7ED5E2) and color2 == 0x909090)
+        MapType := "MapLv7L"
+
     Click, 1777, 67
     Sleep, 1000
 
@@ -176,6 +181,24 @@ MapLv9L() {
     }
     Sleep, 3000
 }
+MapLv7L() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 951, 507
+    If (color == 0x909090)
+    {
+        Click, 951, 507
+    }
+    else
+    {
+        Click, 1148, 737
+    }
+    Sleep, 3000
+}
 
 ^!x:: ; Control+Alt+X hotkey.
     TraceLog("Start")
@@ -186,8 +209,12 @@ MapLv9L() {
         If IsFighting()
         {
             OutputDebug, is fighting
-            Click, 1104, 933
-            Sleep, 200
+            Random, rand, 1, 10
+            If rand > 5
+            {
+                Click, 1104, 933
+                Sleep, 200
+            }
             Click, 1262, 921
             Sleep, 200
             Click, 1497, 924
@@ -220,6 +247,9 @@ MapLv9L() {
                 Case "MapLv9L":
                     ; 冰雪之地區域-西恩波格洛雪道
                     MapLv9L()
+                Case "MapLv7L":
+                    ; 森林之地區域-瓦格雷林道
+                    MapLv7L()
             }
             
             ; 左右移動

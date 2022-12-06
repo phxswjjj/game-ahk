@@ -78,38 +78,37 @@ DetectMap() {
 
     PixelGetColor, color, 966, 473
     PixelGetColor, color2, 730, 698
-    TraceLog(color)
-    If ((color == 0x909090 or color == 0x7ED5E2) and color2 == 0x909090)
+    If (color in 0x909090,0x7ED5E2 and color2 in 0x909090,0x7ED5E2)
         MapType := "MapLv9"
 
     PixelGetColor, color, 1161, 594
     PixelGetColor, color2, 551, 459
-    If ((color == 0x909090 or color == 0x7ED5E2) and color2 == 0x909090)
+    If (color in 0x909090,0x7ED5E2 and color2 in 0x909090,0x7ED5E2)
         MapType := "MapLv1"
 
     PixelGetColor, color, 814, 567
     PixelGetColor, color2, 1183, 820
-    If ((color == 0x909090 or color == 0x7ED5E2) and color2 == 0x909090)
+    If (color in 0x909090,0x7ED5E2 and color2 in 0x909090,0x7ED5E2)
         MapType := "MapLv7"
 
     PixelGetColor, color, 1023, 386
     PixelGetColor, color2, 1029, 669
-    If ((color == 0x909090 or color == 0x7ED5E2) and color2 == 0x909090)
+    If (color in 0x909090,0x7ED5E2 and color2 in 0x909090,0x7ED5E2)
         MapType := "MapLv9L"
 
     PixelGetColor, color, 951, 507
     PixelGetColor, color2, 1148, 737
-    If ((color == 0x909090 or color == 0x7ED5E2) and color2 == 0x909090)
+    If (color in 0x909090,0x7ED5E2 and color2 in 0x909090,0x7ED5E2)
         MapType := "MapLv7L"
 
     PixelGetColor, color, 1224, 469
     PixelGetColor, color2, 668, 655
-    If ((color == 0x909090 or color == 0x7ED5E2) and color2 == 0x909090)
+    If (color in 0x909090,0x7ED5E2 and color2 in 0x909090,0x7ED5E2)
         MapType := "MapLv9L2"
 
     PixelGetColor, color, 869, 440
     PixelGetColor, color2, 1054, 829
-    If ((color == 0x909090 or color == 0x7ED5E2) and color2 == 0x909090)
+    If (color in 0x909090,0x7ED5E2 and color2 in 0x909090,0x7ED5E2)
         MapType := "MapLv9L3"
 
     Click, 1777, 67

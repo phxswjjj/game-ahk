@@ -102,6 +102,16 @@ DetectMap() {
     If ((color == 0x909090 or color == 0x7ED5E2) and color2 == 0x909090)
         MapType := "MapLv7L"
 
+    PixelGetColor, color, 1224, 469
+    PixelGetColor, color2, 668, 655
+    If ((color == 0x909090 or color == 0x7ED5E2) and color2 == 0x909090)
+        MapType := "MapLv9L2"
+
+    PixelGetColor, color, 869, 440
+    PixelGetColor, color2, 1054, 829
+    If ((color == 0x909090 or color == 0x7ED5E2) and color2 == 0x909090)
+        MapType := "MapLv9L3"
+
     Click, 1777, 67
     Sleep, 1000
 
@@ -199,6 +209,42 @@ MapLv7L() {
     }
     Sleep, 3000
 }
+MapLv9L2() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 869, 440
+    If (color == 0x909090)
+    {
+        Click, 869, 440
+    }
+    else
+    {
+        Click, 1054, 829
+    }
+    Sleep, 3000
+}
+MapLv9L3() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 1224, 469
+    If (color == 0x909090)
+    {
+        Click, 1224, 469
+    }
+    else
+    {
+        Click, 668, 655
+    }
+    Sleep, 3000
+}
 
 ^!x:: ; Control+Alt+X hotkey.
     TraceLog("Start")
@@ -250,6 +296,12 @@ MapLv7L() {
                 Case "MapLv7L":
                     ; 森林之地區域-瓦格雷林道
                     MapLv7L()
+                Case "MapLv9L2":
+                    ; 森林之地區域-通往赫爾米尼亞府邸的小路
+                    MapLv9L2()
+                Case "MapLv9L3":
+                    ; 森林之地區域-赫爾米尼亞府邸前
+                    MapLv9L3()
             }
             
             ; 左右移動

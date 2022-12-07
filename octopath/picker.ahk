@@ -18,10 +18,11 @@ Return
 ^!x:: ; Control+Alt+X hotkey.
     WinActivate, ahk_id %UniqueID%
 
+    MouseMove, 869, 440
     Loop, 100
     {
-        PixelGetColor, color, 853, 759
-        OutputDebug, (853, 759) is %color%
+        PixelGetColor, color, 869, 440
+        OutputDebug, (869, 440) is %color%
         Sleep, 200
     }
     

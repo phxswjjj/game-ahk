@@ -21,6 +21,12 @@ TakeScreenshot(x, y) {
     CaptureScreen(0, 1, "CaptureScreen_" FileDate ".png")
 }
 
+IsColorRoad(color) {
+    If (color == 0x909090 or color == 0x7ED5E2)
+        Return True
+    Else
+        Return False
+}
 IsFighting() {
     PixelGetColor, color, 1526, 181
     If color != 0x867954
@@ -78,37 +84,37 @@ DetectMap() {
 
     PixelGetColor, color, 966, 473
     PixelGetColor, color2, 730, 698
-    If (color in 0x909090,0x7ED5E2 and color2 in 0x909090,0x7ED5E2)
+    If (IsColorRoad(color) and IsColorRoad(color2))
         MapType := "MapLv9"
 
     PixelGetColor, color, 1161, 594
     PixelGetColor, color2, 551, 459
-    If (color in 0x909090,0x7ED5E2 and color2 in 0x909090,0x7ED5E2)
+    If (IsColorRoad(color) and IsColorRoad(color2))
         MapType := "MapLv1"
 
-    PixelGetColor, color, 814, 567
-    PixelGetColor, color2, 1183, 820
-    If (color in 0x909090,0x7ED5E2 and color2 in 0x909090,0x7ED5E2)
+    PixelGetColor, color, 873, 441
+    PixelGetColor, color2, 1059, 829
+    If (IsColorRoad(color) and IsColorRoad(color2))
         MapType := "MapLv7"
 
     PixelGetColor, color, 1023, 386
     PixelGetColor, color2, 1029, 669
-    If (color in 0x909090,0x7ED5E2 and color2 in 0x909090,0x7ED5E2)
+    If (IsColorRoad(color) and IsColorRoad(color2))
         MapType := "MapLv9L"
 
     PixelGetColor, color, 951, 507
     PixelGetColor, color2, 1148, 737
-    If (color in 0x909090,0x7ED5E2 and color2 in 0x909090,0x7ED5E2)
+    If (IsColorRoad(color) and IsColorRoad(color2))
         MapType := "MapLv7L"
 
     PixelGetColor, color, 1224, 469
     PixelGetColor, color2, 668, 655
-    If (color in 0x909090,0x7ED5E2 and color2 in 0x909090,0x7ED5E2)
+    If (IsColorRoad(color) and IsColorRoad(color2))
         MapType := "MapLv9L2"
 
     PixelGetColor, color, 953, 503
     PixelGetColor, color2, 755, 662
-    If (color in 0x909090,0x7ED5E2 and color2 in 0x909090,0x7ED5E2)
+    If (IsColorRoad(color) and IsColorRoad(color2))
         MapType := "MapLv9L3"
 
     Click, 1777, 67
@@ -161,14 +167,14 @@ MapLv7() {
 
     Click, 1558, 223
     Sleep, 1000
-    PixelGetColor, color, 814, 567
+    PixelGetColor, color, 873, 441
     If (color == 0x909090)
     {
-        Click, 814, 567
+        Click, 873, 441
     }
     else
     {
-        Click, 1183, 820
+        Click, 1059, 829
     }
     Sleep, 3000
 }
@@ -215,10 +221,10 @@ MapLv9L2() {
 
     Click, 1558, 223
     Sleep, 1000
-    PixelGetColor, color, 869, 440
+    PixelGetColor, color, 1224, 469
     If (color == 0x909090)
     {
-        Click, 869, 440
+        Click, 1224, 469
     }
     else
     {
@@ -255,7 +261,7 @@ MapLv9L3() {
         {
             OutputDebug, is fighting
             Random, rand, 1, 10
-            If rand > 5
+            If rand > 7
             {
                 Click, 1104, 933
                 Sleep, 200

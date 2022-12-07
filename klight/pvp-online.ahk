@@ -85,9 +85,6 @@ IsPVPEnd() {
     PixelGetColor, color, 1438, 61
     if color != 0x000000
     {
-        ; TakeScreenshot(1438, 61)
-        ; TraceLog(Format("(1438, 61) is {1}", color))
-        ; ExitApp
         Return False
     }
     PixelGetColor, color, 1410, 76
@@ -97,6 +94,21 @@ IsPVPEnd() {
     }
     PixelGetColor, color, 1031, 467
     if color != 0xFFFFFF
+    {
+        Return False
+    }
+    Return True
+}
+
+IsLevelUpDown() {
+    WinActivate, ahk_id %UniqueID%
+    PixelGetColor, color, 704, 320
+    if color != 0x181818
+    {
+        Return False
+    }
+    PixelGetColor, color, 435, 454
+    if color != 0xF7EBEF
     {
         Return False
     }
@@ -124,16 +136,17 @@ IsPVPEnd() {
         If IsStartMatch()
         {
             Click, 1663, 859
-            Sleep, 30000
+            Sleep, 5000
         }
 
         ; 戰鬥中，投降
         If IsFighting()
         {
+            Sleep, 3000
             Click, 117, 101
             Sleep, 500
             Click, 1161, 682
-            Sleep, 3000
+            Sleep, 1000
         }
 
         ; 戰鬥結束/結算
@@ -141,6 +154,13 @@ IsPVPEnd() {
         {
             Click, 485, 556
             Sleep, 2000
+        }
+
+        ; 晉級/降級
+        If IsLevelUpDown()
+        {
+            Click, 435, 454
+            Sleep, 1000
         }
     }
 

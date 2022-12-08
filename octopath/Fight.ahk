@@ -251,6 +251,20 @@ MapLv9L3() {
     Sleep, 3000
 }
 
+IsAppCrash() {
+    PixelGetColor, color, 212, 204
+    If (color != 0xF48542)
+    {
+        Return False
+    }
+    PixelGetColor, color, 256, 205
+    If (color != 0x04BCFB)
+    {
+        Return False
+    }
+    Return True
+}
+
 ^!x:: ; Control+Alt+X hotkey.
     TraceLog("Start")
     
@@ -320,6 +334,30 @@ MapLv9L3() {
 
             ; 冰雪之地區域-恩波格洛雪道
             ; MapLv7()
+        }
+
+        If IsAppCrash()
+        {
+            TraceLog("app is crash")
+            ; launch app
+            Click, 1649, 197
+            ; wait tap to start
+            Loop, 180
+            {
+                PixelGetColor, color, 1605, 960
+                If (color == 0x000000 or color == 0xFFFFFF)
+                {
+                    Sleep, 1000
+                    Continue
+                }
+                If (color == 0x202A2C)
+                {
+                    Click, 959, 819
+                    Sleep, 20000
+                    Break
+                }
+                Sleep, 1000
+            }
         }
         
         Sleep, 1000

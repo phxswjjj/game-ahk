@@ -121,6 +121,11 @@ DetectMap() {
     PixelGetColor, color2, 716, 587
     If (IsColorRoad(color) and IsColorRoad(color2))
         MapType := "MapForestLv9"
+        
+    PixelGetColor, color, 709, 526
+    PixelGetColor, color2, 1201, 661
+    If (IsColorRoad(color) and IsColorRoad(color2))
+        MapType := "MapForestLv16"
 
     Click, 1777, 67
     Sleep, 1000
@@ -273,6 +278,24 @@ MapForestLv9() {
     }
     Sleep, 3000
 }
+MapForestLv16() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 709, 526
+    If (color == 0x909090)
+    {
+        Click, 709, 526
+    }
+    else
+    {
+        Click, 1201, 661
+    }
+    Sleep, 3000
+}
 
 IsAppCrash() {
     PixelGetColor, color, 212, 204
@@ -347,6 +370,9 @@ IsAppCrash() {
                 Case "MapForestLv9":
                     ; 森林之地區域-西瓦落雷林道
                     MapForestLv9()
+                Case "MapForestLv16":
+                    ; 森林之地區域-林洞遺跡
+                    MapForestLv16()
             }
             
             ; 左右移動

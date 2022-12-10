@@ -131,6 +131,11 @@ DetectMap() {
     PixelGetColor, color2, 1089, 260
     If (IsColorRoad(color) and IsColorRoad(color2))
         MapType := "MapIceLv16"
+        
+    PixelGetColor, color, 614, 410
+    PixelGetColor, color2, 1292, 662
+    If (IsColorRoad(color) and IsColorRoad(color2))
+        MapType := "MapPlainLv9"
 
     Click, 1777, 67
     Sleep, 1000
@@ -319,6 +324,24 @@ MapIceLv16() {
     }
     Sleep, 3000
 }
+MapPlainLv9() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 614, 410
+    If (color == 0x909090)
+    {
+        Click, 614, 410
+    }
+    else
+    {
+        Click, 1292, 662
+    }
+    Sleep, 3000
+}
 
 IsAppCrash() {
     PixelGetColor, color, 212, 204
@@ -399,6 +422,9 @@ IsAppCrash() {
                 Case "MapIceLv16":
                     ; 冰雪之地區域-雪花晶洞穴
                     MapIceLv16()
+                Case "MapPlainLv9":
+                    ; 平原之地區域-北希亞特珀利斯平原
+                    MapPlainLv9()
             }
             
             ; 左右移動

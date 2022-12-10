@@ -127,6 +127,11 @@ DetectMap() {
     If (IsColorRoad(color) and IsColorRoad(color2))
         MapType := "MapForestLv16"
         
+    PixelGetColor, color, 1054, 801
+    PixelGetColor, color2, 937, 419
+    If (IsColorRoad(color) and IsColorRoad(color2))
+        MapType := "MapIceLv12"
+        
     PixelGetColor, color, 805, 710
     PixelGetColor, color2, 1089, 260
     If (IsColorRoad(color) and IsColorRoad(color2))
@@ -321,6 +326,24 @@ MapForestLv16() {
     }
     Sleep, 3000
 }
+MapIceLv12() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 1054, 801
+    If (color == 0x909090)
+    {
+        Click, 1054, 801
+    }
+    else
+    {
+        Click, 937, 419
+    }
+    Sleep, 3000
+}
 MapIceLv16() {
     PixelGetColor, color, 373, 849
     If ((color & 0xF0F0F0) != 0xF0F0F0 )
@@ -488,6 +511,9 @@ IsAppCrash() {
                 Case "MapForestLv16":
                     ; 森林之地區域-林洞遺跡
                     MapForestLv16()
+                Case "MapIceLv12":
+                    ; 冰雪之地區域-恩波格洛雪山
+                    MapIceLv12()
                 Case "MapIceLv16":
                     ; 冰雪之地區域-雪花晶洞穴
                     MapIceLv16()

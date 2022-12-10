@@ -141,6 +141,16 @@ DetectMap() {
     PixelGetColor, color2, 1292, 662
     If (IsColorRoad(color) and IsColorRoad(color2))
         MapType := "MapPlainLv9"
+        
+    PixelGetColor, color, 522, 867
+    PixelGetColor, color2, 992, 303
+    If (IsColorRoad(color) and IsColorRoad(color2))
+        MapType := "MapPlainLv11"
+        
+    PixelGetColor, color, 1254, 607
+    PixelGetColor, color2, 986, 596
+    If (IsColorRoad(color) and IsColorRoad(color2))
+        MapType := "MapPlainLv12"
 
     Click, 1777, 67
     Sleep, 1000
@@ -365,6 +375,42 @@ MapPlainLv9() {
     }
     Sleep, 3000
 }
+MapPlainLv11() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 522, 867
+    If (color == 0x909090)
+    {
+        Click, 522, 867
+    }
+    else
+    {
+        Click, 992, 303
+    }
+    Sleep, 3000
+}
+MapPlainLv12() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 1254, 607
+    If (color == 0x909090)
+    {
+        Click, 1254, 607
+    }
+    else
+    {
+        Click, 986, 596
+    }
+    Sleep, 3000
+}
 
 IsAppCrash() {
     PixelGetColor, color, 212, 204
@@ -451,6 +497,12 @@ IsAppCrash() {
                 Case "MapPlainLv9":
                     ; 平原之地區域-北希亞特珀利斯平原
                     MapPlainLv9()
+                Case "MapPlainLv11":
+                    ; 平原之地區域-大劇場-練習場
+                    MapPlainLv11()
+                Case "MapPlainLv12":
+                    ; 平原之地區域-聖火騎士駐地
+                    MapPlainLv12()
             }
             
             ; 左右移動

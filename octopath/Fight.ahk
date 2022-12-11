@@ -157,6 +157,11 @@ DetectMap() {
     If (IsColorRoad(color) and IsColorRoad(color2))
         MapType := "MapIceLv16"
         
+    PixelGetColor, color, 758, 557
+    PixelGetColor, color2, 662, 717
+    If (IsColorRoad(color) and IsColorRoad(color2))
+        MapType := "MapIceLv18"
+        
     PixelGetColor, color, 633, 649
     PixelGetColor, color2, 964, 431
     If (IsColorRoad(color) and IsColorRoad(color2))
@@ -454,6 +459,24 @@ MapIceLv16() {
     }
     Sleep, 3000
 }
+MapIceLv18() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 758, 557
+    If (color == 0x909090)
+    {
+        Click, 758, 557
+    }
+    else
+    {
+        Click, 662, 717
+    }
+    Sleep, 3000
+}
 MapPlainLv7() {
     PixelGetColor, color, 373, 849
     If ((color & 0xF0F0F0) != 0xF0F0F0 )
@@ -621,6 +644,9 @@ IsAppCrash() {
                 Case "MapIceLv16":
                     ; 冰雪之地區域-雪花晶洞穴
                     MapIceLv16()
+                Case "MapIceLv18":
+                    ; 冰雪之地區域-竣工典禮場所
+                    MapIceLv18()
                 Case "MapPlainLv7":
                     ; 平原之地區域-希亞特珀利斯平原
                     MapPlainLv7()

@@ -186,6 +186,11 @@ DetectMap() {
     PixelGetColor, color2, 986, 596
     If (IsColorRoad(color) and IsColorRoad(color2))
         MapType := "MapPlainLv12"
+        
+    PixelGetColor, color, 725, 686
+    PixelGetColor, color2, 770, 457
+    If (IsColorRoad(color) and IsColorRoad(color2))
+        MapType := "MapPlainLv20"
 
     Click, 1777, 67
     Sleep, 1000
@@ -572,6 +577,24 @@ MapPlainLv12() {
     }
     Sleep, 3000
 }
+MapPlainLv20() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 725, 686
+    If (color == 0x909090)
+    {
+        Click, 725, 686
+    }
+    else
+    {
+        Click, 770, 457
+    }
+    Sleep, 3000
+}
 
 IsAppCrash() {
     PixelGetColor, color, 212, 204
@@ -685,6 +708,9 @@ IsAppCrash() {
                 Case "MapPlainLv12":
                     ; 平原之地區域-聖火騎士駐地
                     MapPlainLv12()
+                Case "MapPlainLv20":
+                    ; 平原之地區域-大劇場-後台
+                    MapPlainLv20()
             }
             
             ; 左右移動

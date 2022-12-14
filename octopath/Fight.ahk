@@ -137,6 +137,11 @@ DetectMap() {
     If (IsColorRoad(color) and IsColorRoad(color2))
         MapType := "MapForestLv16v3"
         
+    PixelGetColor, color, 1300, 615
+    PixelGetColor, color2, 606, 285
+    If (IsColorRoad(color) and IsColorRoad(color2))
+        MapType := "MapForestLv21"
+        
     PixelGetColor, color, 1054, 801
     PixelGetColor, color2, 937, 419
     If (IsColorRoad(color) and IsColorRoad(color2))
@@ -174,7 +179,10 @@ DetectMap() {
         
     PixelGetColor, color, 614, 410
     PixelGetColor, color2, 1292, 662
-    If (IsColorRoad(color) and IsColorRoad(color2))
+    PixelGetColor, color3, 1038, 425
+    PixelGetColor, color4, 733, 601
+    If (IsColorRoad(color) and IsColorRoad(color2)
+        and IsColorRoad(color3) and IsColorRoad(color4))
         MapType := "MapPlainLv9"
         
     PixelGetColor, color, 522, 867
@@ -394,6 +402,24 @@ MapForestLv16v3() {
     else
     {
         Click, 781, 499
+    }
+    Sleep, 3000
+}
+MapForestLv21() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 1300, 615
+    If (color == 0x909090)
+    {
+        Click, 1300, 615
+    }
+    else
+    {
+        Click, 606, 285
     }
     Sleep, 3000
 }
@@ -678,6 +704,9 @@ IsAppCrash() {
                 Case "MapForestLv16v3":
                     ; 森林之地區域-亞久斯特別墅
                     MapForestLv16v3()
+                Case "MapForestLv21":
+                    ; 森林之地區域-赫爾米宣亞府邸
+                    MapForestLv21()
                 Case "MapIceLv12":
                     ; 冰雪之地區域-恩波格洛雪山
                     MapIceLv12()

@@ -142,6 +142,14 @@ DetectMap() {
     If (IsColorRoad(color) and IsColorRoad(color2))
         MapType := "MapForestLv21"
         
+    PixelGetColor, color, 1082, 438
+    PixelGetColor, color2, 749, 887
+    PixelGetColor, color3, 694, 653
+    PixelGetColor, color4, 1007, 759
+    If (IsColorRoad(color) and IsColorRoad(color2)
+        and IsColorRoad(color3) and IsColorRoad(color4))
+        MapType := "MapForestLv21v2"
+        
     PixelGetColor, color, 1054, 801
     PixelGetColor, color2, 937, 419
     If (IsColorRoad(color) and IsColorRoad(color2))
@@ -420,6 +428,24 @@ MapForestLv21() {
     else
     {
         Click, 606, 285
+    }
+    Sleep, 3000
+}
+MapForestLv21v2() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 1082, 438
+    If (color == 0x909090)
+    {
+        Click, 1082, 438
+    }
+    else
+    {
+        Click, 749, 887
     }
     Sleep, 3000
 }
@@ -707,6 +733,9 @@ IsAppCrash() {
                 Case "MapForestLv21":
                     ; 森林之地區域-赫爾米宣亞府邸
                     MapForestLv21()
+                Case "MapForestLv21v2":
+                    ; 森林之地區域-赫爾米宣亞府邸地下
+                    MapForestLv21v2()
                 Case "MapIceLv12":
                     ; 冰雪之地區域-恩波格洛雪山
                     MapIceLv12()

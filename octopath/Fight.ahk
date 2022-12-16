@@ -207,6 +207,14 @@ DetectMap() {
     PixelGetColor, color2, 770, 457
     If (IsColorRoad(color) and IsColorRoad(color2))
         MapType := "MapPlainLv20"
+        
+    PixelGetColor, color, 536, 402
+    PixelGetColor, color2, 659, 861
+    PixelGetColor, color3, 664, 677
+    PixelGetColor, color4, 822, 488
+    If (IsColorRoad(color) and IsColorRoad(color2)
+        and IsColorRoad(color3) and IsColorRoad(color4))
+        MapType := "MapOceanLv23"
 
     Click, 1777, 67
     Sleep, 1000
@@ -647,6 +655,24 @@ MapPlainLv20() {
     }
     Sleep, 3000
 }
+MapOceanLv23() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 536, 402
+    If (color == 0x909090)
+    {
+        Click, 536, 402
+    }
+    else
+    {
+        Click, 659, 861
+    }
+    Sleep, 3000
+}
 
 IsAppCrash() {
     PixelGetColor, color, 212, 204
@@ -769,6 +795,9 @@ IsAppCrash() {
                 Case "MapPlainLv20":
                     ; 平原之地區域-大劇場-後台
                     MapPlainLv20()
+                Case "MapOceanLv23":
+                    ; 海岸之地區域-利布爾泰德海道
+                    MapOceanLv23()
             }
             
             ; 左右移動

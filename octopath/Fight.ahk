@@ -215,6 +215,14 @@ DetectMap() {
     If (IsColorRoad(color) and IsColorRoad(color2)
         and IsColorRoad(color3) and IsColorRoad(color4))
         MapType := "MapOceanLv23"
+        
+    PixelGetColor, color, 625, 701
+    PixelGetColor, color2, 676, 320
+    PixelGetColor, color3, 838, 410
+    PixelGetColor, color4, 1058, 562
+    If (IsColorRoad(color) and IsColorRoad(color2)
+        and IsColorRoad(color3) and IsColorRoad(color4))
+        MapType := "MapOceanLv23v2"
 
     Click, 1777, 67
     Sleep, 1000
@@ -673,6 +681,24 @@ MapOceanLv23() {
     }
     Sleep, 3000
 }
+MapOceanLv23v2() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 625, 701
+    If (color == 0x909090)
+    {
+        Click, 625, 701
+    }
+    else
+    {
+        Click, 676, 320
+    }
+    Sleep, 3000
+}
 
 IsAppCrash() {
     PixelGetColor, color, 212, 204
@@ -798,6 +824,9 @@ IsAppCrash() {
                 Case "MapOceanLv23":
                     ; 海岸之地區域-利布爾泰德海道
                     MapOceanLv23()
+                Case "MapOceanLv23v2":
+                    ; 海岸之地區域-奧爾薩島
+                    MapOceanLv23v2()
             }
             
             ; 左右移動

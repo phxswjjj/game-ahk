@@ -33,6 +33,12 @@ IsFighting() {
     {
         Return False
     }
+    PixelGetColor, color, 1224, 952
+    If ((color & 0xD0D0D0) != 0xD0D0D0
+        and (color & 0x303030) != 0x303030)
+    {
+        Return False
+    }
     Return True
 }
 IsFightingResult() {
@@ -61,19 +67,6 @@ IsOutside() {
         Return False
     }
     Return True
-}
-RunLeftRight() {
-    Loop, 6
-    {
-        If not IsOutside()
-            Break
-        
-        If Mod(A_Index, 2) = 0
-            MouseClickDrag, left, 100, 200, 200, 200
-        Else
-            MouseClickDrag, left, 200, 200, 100, 200
-        Sleep, 4000
-    }
 }
 DetectMap() {
     If (MapType != "unknown")
@@ -723,12 +716,14 @@ IsAppCrash() {
         If IsFighting()
         {
             OutputDebug, is fighting
-            Random, rand, 1, 10
-            If rand > 7
+            PixelGetColor, color, 1224, 952
+            If ((color & 0xD0D0D0) != 0xD0D0D0)
             {
+                ; 前後衛調換
                 Click, 1104, 933
                 Sleep, 200
             }
+
             Click, 1262, 921
             Sleep, 200
             Click, 1497, 924
@@ -828,18 +823,6 @@ IsAppCrash() {
                     ; 海岸之地區域-奧爾薩島
                     MapOceanLv23v2()
             }
-            
-            ; 左右移動
-            ; RunLeftRight()
-
-            ; 冰雪之地區域-恩波格洛研究所前
-            ; MapLv9()
-
-            ; 冰雪之地區域-恩波格洛研究所
-            ; MapLv1()
-
-            ; 冰雪之地區域-恩波格洛雪道
-            ; MapLv7()
         }
 
         If IsAppCrash()

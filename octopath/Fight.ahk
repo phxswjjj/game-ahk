@@ -216,6 +216,14 @@ DetectMap() {
     If (IsColorRoad(color) and IsColorRoad(color2)
         and IsColorRoad(color3) and IsColorRoad(color4))
         MapType := "MapOceanLv23v2"
+        
+    PixelGetColor, color, 742, 278
+    PixelGetColor, color2, 814, 726
+    PixelGetColor, color3, 817, 630
+    PixelGetColor, color4, 1150, 271
+    If (IsColorRoad(color) and IsColorRoad(color2)
+        and IsColorRoad(color3) and IsColorRoad(color4))
+        MapType := "MapRiverLv37"
 
     Click, 1777, 67
     Sleep, 1000
@@ -692,6 +700,24 @@ MapOceanLv23v2() {
     }
     Sleep, 3000
 }
+MapRiverLv37() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 742, 278
+    If (color == 0x909090)
+    {
+        Click, 742, 278
+    }
+    else
+    {
+        Click, 814, 726
+    }
+    Sleep, 3000
+}
 
 IsAppCrash() {
     PixelGetColor, color, 212, 204
@@ -822,6 +848,9 @@ IsAppCrash() {
                 Case "MapOceanLv23v2":
                     ; 海岸之地區域-奧爾薩島
                     MapOceanLv23v2()
+                Case "MapRiverLv37":
+                    ; 河流之地區域-通往積水洞窟的道路
+                    MapRiverLv37()
             }
         }
 

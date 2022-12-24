@@ -232,6 +232,14 @@ DetectMap() {
     If (IsColorRoad(color) and IsColorRoad(color2)
         and IsColorRoad(color3) and IsColorRoad(color4))
         MapType := "MapDesertLv42"
+        
+    PixelGetColor, color, 926, 334
+    PixelGetColor, color2, 1038, 782
+    PixelGetColor, color3, 743, 707
+    PixelGetColor, color4, 930, 515
+    If (IsColorRoad(color) and IsColorRoad(color2)
+        and IsColorRoad(color3) and IsColorRoad(color4))
+        MapType := "MapCliffLv30"
 
     Click, 1777, 67
     Sleep, 1000
@@ -708,6 +716,24 @@ MapOceanLv23v2() {
     }
     Sleep, 3000
 }
+MapCliffLv30() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 926, 334
+    If (color == 0x909090)
+    {
+        Click, 926, 334
+    }
+    else
+    {
+        Click, 1038, 782
+    }
+    Sleep, 3000
+}
 MapRiverLv37() {
     PixelGetColor, color, 373, 849
     If ((color & 0xF0F0F0) != 0xF0F0F0 )
@@ -880,6 +906,9 @@ IsAppCrash() {
                 Case "MapDesertLv42":
                     ; 沙漠之地區域-桑謝德沙道
                     MapDesertLv42()
+                Case "MapCliffLv30":
+                    ; 懸崖之地區域-南克拉克斯比亞崖道
+                    MapCliffLv30()
             }
         }
 

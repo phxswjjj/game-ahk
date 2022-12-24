@@ -1,37 +1,33 @@
-﻿#Include, ../CaptureScreen.ahk ; assumes it's in the same folder as script
-
-#InstallKeybdHook
-
+﻿
 AppTitle := "octopath"
-UniqueID := WinExist(AppTitle)
+global UniqueID := WinExist(AppTitle)
 if not UniqueID {
-    OutputDebug, "[%AppTitle%] not found"
+    OutputDebug("[" AppTitle "] not found")
     Return
 }
 
 TraceLog(msg) {
-    FormatTime, CurrentDateTime,, HH:mm:ss
-    OutputDebug, [%CurrentDateTime%] %msg%
+    CurrentDateTime := FormatTime(, "HH:mm:ss")
+    OutputDebug("[" CurrentDateTime "] " msg)
 }
 Return
 
 ^!x:: ; Control+Alt+X hotkey.
-    WinActivate, ahk_id %UniqueID%
+{
+    WinActivate(UniqueID)
 
-    MouseMove, 869, 440
-    Loop, 100
+    MouseMove(1224, 952)
+    Loop 1000
     {
-        PixelGetColor, color, 869, 440
-        OutputDebug, (869, 440) is %color%
-        Sleep, 200
+        color := PixelGetColor(1224, 952)
+        OutputDebug(color)
+        Sleep(200)
     }
-    
-Return
+}
 
 
 ^!z:: ; Control+Alt+Z hotkey.
+{
     TraceLog("Stopped")
-ExitApp
-
-
-#KeyHistory
+    ExitApp
+}

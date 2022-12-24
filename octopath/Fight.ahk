@@ -224,6 +224,14 @@ DetectMap() {
     If (IsColorRoad(color) and IsColorRoad(color2)
         and IsColorRoad(color3) and IsColorRoad(color4))
         MapType := "MapRiverLv37"
+        
+    PixelGetColor, color, 694, 444
+    PixelGetColor, color2, 1041, 557
+    PixelGetColor, color3, 694, 535
+    PixelGetColor, color4, 869, 614
+    If (IsColorRoad(color) and IsColorRoad(color2)
+        and IsColorRoad(color3) and IsColorRoad(color4))
+        MapType := "MapDesertLv42"
 
     Click, 1777, 67
     Sleep, 1000
@@ -718,6 +726,24 @@ MapRiverLv37() {
     }
     Sleep, 3000
 }
+MapDesertLv42() {
+    PixelGetColor, color, 373, 849
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click, 1558, 223
+    Sleep, 1000
+    PixelGetColor, color, 694, 444
+    If (color == 0x909090)
+    {
+        Click, 694, 444
+    }
+    else
+    {
+        Click, 1041, 557
+    }
+    Sleep, 3000
+}
 
 IsAppCrash() {
     PixelGetColor, color, 212, 204
@@ -851,6 +877,9 @@ IsAppCrash() {
                 Case "MapRiverLv37":
                     ; 河流之地區域-通往積水洞窟的道路
                     MapRiverLv37()
+                Case "MapDesertLv42":
+                    ; 沙漠之地區域-桑謝德沙道
+                    MapDesertLv42()
             }
         }
 

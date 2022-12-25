@@ -16,10 +16,11 @@ Return
 {
     WinActivate(UniqueID)
 
-    MouseMove(1224, 952)
+    pos := [1558, 223]
+    MouseMove(pos*)
     Loop 1000
     {
-        color := PixelGetColor(1224, 952)
+        color := PixelGetColor(pos*)
         OutputDebug(color)
         Sleep(200)
     }

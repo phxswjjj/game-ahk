@@ -236,6 +236,14 @@ DetectMap() {
     If (IsColorRoad(color) and IsColorRoad(color2)
         and IsColorRoad(color3) and IsColorRoad(color4))
         MapType := "MapCliffLv30"
+        
+    color := PixelGetColor(950, 414)
+    color2 := PixelGetColor(854, 848)
+    color3 := PixelGetColor(947, 566)
+    color4 := PixelGetColor(1114, 842)
+    If (IsColorRoad(color) and IsColorRoad(color2)
+        and IsColorRoad(color3) and IsColorRoad(color4))
+        MapType := "MapCliffLv32"
 
     Click(1777, 67)
     Sleep(1000)
@@ -730,6 +738,24 @@ MapCliffLv30() {
     }
     Sleep(3000)
 }
+MapCliffLv32() {
+    color := PixelGetColor(373, 849)
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click(1558, 223)
+    Sleep(1000)
+    color := PixelGetColor(950, 414)
+    If (color == 0x909090)
+    {
+        Click(950, 414)
+    }
+    else
+    {
+        Click(854, 848)
+    }
+    Sleep(3000)
+}
 MapRiverLv37() {
     color := PixelGetColor(373, 849)
     If ((color & 0xF0F0F0) != 0xF0F0F0 )
@@ -910,6 +936,9 @@ IsAppCrash() {
                 Case "MapCliffLv30":
                     ; 懸崖之地區域-南克拉克斯比亞崖道
                     MapCliffLv30()
+                Case "MapCliffLv32":
+                    ; 懸崖之地區域-蓋斯特峽谷-南-
+                    MapCliffLv32()
             }
         }
 

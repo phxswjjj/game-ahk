@@ -1,4 +1,6 @@
-; #Include "./Map/Desert.ahk"
+#Include "../Utility/MyMap.ahk"
+#Include "./Map/Desert.ahk"
+#Include "./Map/Cliff.ahk"
 
 global AppTitle := "octopath"
 global UniqueID := WinExist(AppTitle)
@@ -8,6 +10,11 @@ if not UniqueID {
 }
 
 global MapType := "unknown"
+
+global MapDefineds := MyMap()
+
+MapDefineds.Extends(DesertMap.Maps)
+MapDefineds.Extends(CliffMap.Maps)
 
 Return
 
@@ -21,6 +28,10 @@ IsColorRoad(color) {
         Return True
     Else
         Return False
+}
+IsPosColorRoad(x, y) {
+    color := PixelGetColor(x, y)
+    Return IsColorRoad(color)
 }
 IsFighting() {
     color := PixelGetColor(1526, 181)
@@ -65,192 +76,206 @@ IsOutside() {
 }
 DetectMap() {
     global MapType
+    global MapDefineds
     If (MapType != "unknown")
         Return
 
     Click(1558, 223)
     Sleep(1000)
 
-    color := PixelGetColor(966, 473)
-    color2 := PixelGetColor(730, 698)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapLv9"
+    For mapKey, mapValue In MapDefineds {
+        bAllRoad := True
+        For pos In mapValue {
+            If Not IsPosColorRoad(pos*) {
+                If mapKey = "MapCliffLv32" {
+                    color := PixelGetColor(pos[1], pos[2])
+                    TraceLog(mapKey ": " pos[1] ", " pos[2] " is not road, color=" color)
+                }
+                bAllRoad := False
+                Break
+            }
+        }
+        If bAllRoad {
+            MapType := mapKey
+            TraceLog("MyMap Detected: " mapKey)
+        }
+    }
 
-    color := PixelGetColor(1161, 594)
-    color2 := PixelGetColor(551, 459)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapLv1"
+    If MapType != "unknown" {
+        color := PixelGetColor(966, 473)
+        color2 := PixelGetColor(730, 698)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapLv9"
 
-    color := PixelGetColor(873, 441)
-    color2 := PixelGetColor(1059, 829)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapLv7"
+        color := PixelGetColor(1161, 594)
+        color2 := PixelGetColor(551, 459)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapLv1"
 
-    color := PixelGetColor(1023, 386)
-    color2 := PixelGetColor(1029, 669)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapLv9L"
+        color := PixelGetColor(873, 441)
+        color2 := PixelGetColor(1059, 829)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapLv7"
 
-    color := PixelGetColor(951, 507)
-    color2 := PixelGetColor(1148, 737)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapLv7L"
+        color := PixelGetColor(1023, 386)
+        color2 := PixelGetColor(1029, 669)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapLv9L"
 
-    color := PixelGetColor(1224, 469)
-    color2 := PixelGetColor(668, 655)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapLv9L2"
+        color := PixelGetColor(951, 507)
+        color2 := PixelGetColor(1148, 737)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapLv7L"
 
-    color := PixelGetColor(953, 503)
-    color2 := PixelGetColor(755, 662)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapLv9L3"
+        color := PixelGetColor(1224, 469)
+        color2 := PixelGetColor(668, 655)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapLv9L2"
 
-    color := PixelGetColor(1143, 582)
-    color2 := PixelGetColor(716, 587)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapForestLv9"
-        
-    color := PixelGetColor(709, 526)
-    color2 := PixelGetColor(1201, 661)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapForestLv16"
-        
-    color := PixelGetColor(1189, 508)
-    color2 := PixelGetColor(584, 798)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapForestLv16v2"
-        
-    color := PixelGetColor(461, 697)
-    color2 := PixelGetColor(781, 499)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapForestLv16v3"
-        
-    color := PixelGetColor(1300, 615)
-    color2 := PixelGetColor(606, 285)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapForestLv21"
-        
-    color := PixelGetColor(1082, 438)
-    color2 := PixelGetColor(749, 887)
-    color3 := PixelGetColor(694, 653)
-    color4 := PixelGetColor(1007, 759)
-    If (IsColorRoad(color) and IsColorRoad(color2)
-        and IsColorRoad(color3) and IsColorRoad(color4))
-        MapType := "MapForestLv21v2"
-        
-    color := PixelGetColor(1054, 801)
-    color2 := PixelGetColor(937, 419)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapIceLv12"
-        
-    color := PixelGetColor(501, 272)
-    color2 := PixelGetColor(926, 658)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapIceLv14"
-        
-    color := PixelGetColor(946, 355)
-    color2 := PixelGetColor(944, 825)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapIceLv14v2"
-        
-    color := PixelGetColor(805, 710)
-    color2 := PixelGetColor(1089, 260)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapIceLv16"
-        
-    color := PixelGetColor(758, 557)
-    color2 := PixelGetColor(662, 717)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapIceLv18"
-        
-    color := PixelGetColor(1334, 600)
-    color2 := PixelGetColor(433, 600)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapIceLv18v2"
-        
-    color := PixelGetColor(633, 649)
-    color2 := PixelGetColor(964, 431)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapPlainLv7"
-        
-    color := PixelGetColor(614, 410)
-    color2 := PixelGetColor(1292, 662)
-    color3 := PixelGetColor(1038, 425)
-    color4 := PixelGetColor(733, 601)
-    If (IsColorRoad(color) and IsColorRoad(color2)
-        and IsColorRoad(color3) and IsColorRoad(color4))
-        MapType := "MapPlainLv9"
-        
-    color := PixelGetColor(522, 867)
-    color2 := PixelGetColor(992, 303)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapPlainLv11"
-        
-    color := PixelGetColor(1254, 607)
-    color2 := PixelGetColor(986, 596)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapPlainLv12"
-        
-    color := PixelGetColor(725, 686)
-    color2 := PixelGetColor(770, 457)
-    If (IsColorRoad(color) and IsColorRoad(color2))
-        MapType := "MapPlainLv20"
-        
-    color := PixelGetColor(536, 402)
-    color2 := PixelGetColor(659, 861)
-    color3 := PixelGetColor(664, 677)
-    color4 := PixelGetColor(822, 488)
-    If (IsColorRoad(color) and IsColorRoad(color2)
-        and IsColorRoad(color3) and IsColorRoad(color4))
-        MapType := "MapOceanLv23"
-        
-    color := PixelGetColor(625, 701)
-    color2 := PixelGetColor(676, 320)
-    color3 := PixelGetColor(838, 410)
-    color4 := PixelGetColor(1058, 562)
-    If (IsColorRoad(color) and IsColorRoad(color2)
-        and IsColorRoad(color3) and IsColorRoad(color4))
-        MapType := "MapOceanLv23v2"
-        
-    color := PixelGetColor(742, 278)
-    color2 := PixelGetColor(814, 726)
-    color3 := PixelGetColor(817, 630)
-    color4 := PixelGetColor(1150, 271)
-    If (IsColorRoad(color) and IsColorRoad(color2)
-        and IsColorRoad(color3) and IsColorRoad(color4))
-        MapType := "MapRiverLv37"
-        
-    color := PixelGetColor(694, 444)
-    color2 := PixelGetColor(1041, 557)
-    color3 := PixelGetColor(694, 535)
-    color4 := PixelGetColor(869, 614)
-    If (IsColorRoad(color) and IsColorRoad(color2)
-        and IsColorRoad(color3) and IsColorRoad(color4))
-        MapType := "MapDesertLv42"
-        
-    color := PixelGetColor(926, 334)
-    color2 := PixelGetColor(1038, 782)
-    color3 := PixelGetColor(743, 707)
-    color4 := PixelGetColor(930, 515)
-    If (IsColorRoad(color) and IsColorRoad(color2)
-        and IsColorRoad(color3) and IsColorRoad(color4))
-        MapType := "MapCliffLv30"
-        
-    color := PixelGetColor(950, 414)
-    color2 := PixelGetColor(854, 848)
-    color3 := PixelGetColor(947, 566)
-    color4 := PixelGetColor(1114, 842)
-    If (IsColorRoad(color) and IsColorRoad(color2)
-        and IsColorRoad(color3) and IsColorRoad(color4))
-        MapType := "MapCliffLv32"
+        color := PixelGetColor(953, 503)
+        color2 := PixelGetColor(755, 662)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapLv9L3"
 
+        color := PixelGetColor(1143, 582)
+        color2 := PixelGetColor(716, 587)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapForestLv9"
+            
+        color := PixelGetColor(709, 526)
+        color2 := PixelGetColor(1201, 661)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapForestLv16"
+            
+        color := PixelGetColor(1189, 508)
+        color2 := PixelGetColor(584, 798)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapForestLv16v2"
+            
+        color := PixelGetColor(461, 697)
+        color2 := PixelGetColor(781, 499)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapForestLv16v3"
+            
+        color := PixelGetColor(1300, 615)
+        color2 := PixelGetColor(606, 285)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapForestLv21"
+            
+        color := PixelGetColor(1082, 438)
+        color2 := PixelGetColor(749, 887)
+        color3 := PixelGetColor(694, 653)
+        color4 := PixelGetColor(1007, 759)
+        If (IsColorRoad(color) and IsColorRoad(color2)
+            and IsColorRoad(color3) and IsColorRoad(color4))
+            MapType := "MapForestLv21v2"
+            
+        color := PixelGetColor(1054, 801)
+        color2 := PixelGetColor(937, 419)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapIceLv12"
+            
+        color := PixelGetColor(501, 272)
+        color2 := PixelGetColor(926, 658)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapIceLv14"
+            
+        color := PixelGetColor(946, 355)
+        color2 := PixelGetColor(944, 825)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapIceLv14v2"
+            
+        color := PixelGetColor(805, 710)
+        color2 := PixelGetColor(1089, 260)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapIceLv16"
+            
+        color := PixelGetColor(758, 557)
+        color2 := PixelGetColor(662, 717)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapIceLv18"
+            
+        color := PixelGetColor(1334, 600)
+        color2 := PixelGetColor(433, 600)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapIceLv18v2"
+            
+        color := PixelGetColor(633, 649)
+        color2 := PixelGetColor(964, 431)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapPlainLv7"
+            
+        color := PixelGetColor(614, 410)
+        color2 := PixelGetColor(1292, 662)
+        color3 := PixelGetColor(1038, 425)
+        color4 := PixelGetColor(733, 601)
+        If (IsColorRoad(color) and IsColorRoad(color2)
+            and IsColorRoad(color3) and IsColorRoad(color4))
+            MapType := "MapPlainLv9"
+            
+        color := PixelGetColor(522, 867)
+        color2 := PixelGetColor(992, 303)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapPlainLv11"
+            
+        color := PixelGetColor(1254, 607)
+        color2 := PixelGetColor(986, 596)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapPlainLv12"
+            
+        color := PixelGetColor(725, 686)
+        color2 := PixelGetColor(770, 457)
+        If (IsColorRoad(color) and IsColorRoad(color2))
+            MapType := "MapPlainLv20"
+            
+        color := PixelGetColor(536, 402)
+        color2 := PixelGetColor(659, 861)
+        color3 := PixelGetColor(664, 677)
+        color4 := PixelGetColor(822, 488)
+        If (IsColorRoad(color) and IsColorRoad(color2)
+            and IsColorRoad(color3) and IsColorRoad(color4))
+            MapType := "MapOceanLv23"
+            
+        color := PixelGetColor(625, 701)
+        color2 := PixelGetColor(676, 320)
+        color3 := PixelGetColor(838, 410)
+        color4 := PixelGetColor(1058, 562)
+        If (IsColorRoad(color) and IsColorRoad(color2)
+            and IsColorRoad(color3) and IsColorRoad(color4))
+            MapType := "MapOceanLv23v2"
+            
+        color := PixelGetColor(742, 278)
+        color2 := PixelGetColor(814, 726)
+        color3 := PixelGetColor(817, 630)
+        color4 := PixelGetColor(1150, 271)
+        If (IsColorRoad(color) and IsColorRoad(color2)
+            and IsColorRoad(color3) and IsColorRoad(color4))
+            MapType := "MapRiverLv37"
+        
+    }
+
+    ; close map
     Click(1777, 67)
     Sleep(1000)
 
     If (MapType == "unknown")
         MapType := "NA"
     TraceLog(Format("MapType={1}", MapType))
+}
+RandomRunMap(mapValue) {
+    color := PixelGetColor(373, 849)
+    If ((color & 0xF0F0F0) != 0xF0F0F0 )
+        Return
+
+    Click(1558, 223)
+    Sleep(1000)
+
+    For pos In mapValue {
+        If IsPosColorRoad(pos*) {
+            Click(pos*)
+        }
+    }
+    Sleep(3000)
 }
 MapLv9() {
     color := PixelGetColor(373, 849)
@@ -774,24 +799,6 @@ MapRiverLv37() {
     }
     Sleep(3000)
 }
-MapDesertLv42() {
-    color := PixelGetColor(373, 849)
-    If ((color & 0xF0F0F0) != 0xF0F0F0 )
-        Return
-
-    Click(1558, 223)
-    Sleep(1000)
-    color := PixelGetColor(694, 444)
-    If (color == 0x909090)
-    {
-        Click(694, 444)
-    }
-    else
-    {
-        Click(1041, 557)
-    }
-    Sleep(3000)
-}
 
 IsAppCrash() {
     color := PixelGetColor(212, 204)
@@ -930,15 +937,10 @@ IsAppCrash() {
                 Case "MapRiverLv37":
                     ; 河流之地區域-通往積水洞窟的道路
                     MapRiverLv37()
-                Case "MapDesertLv42":
-                    ; 沙漠之地區域-桑謝德沙道
-                    MapDesertLv42()
-                Case "MapCliffLv30":
-                    ; 懸崖之地區域-南克拉克斯比亞崖道
-                    MapCliffLv30()
-                Case "MapCliffLv32":
-                    ; 懸崖之地區域-蓋斯特峽谷-南-
-                    MapCliffLv32()
+            }
+
+            If MapDefineds.Has(MapType) {
+                RandomRunMap(MapDefineds.Get(MapType))
             }
         }
 

@@ -56,7 +56,8 @@ IsFightingResult() {
 }
 IsOutside() {
     color := PixelGetColor(1558, 223)
-    If ((color & 0xE0D070) != 0xE0D070)
+    If ((color & 0xE0D070) != 0xE0D070
+        or (color & 0xC0C070) != 0xC0C070)
     {
         Return False
     }

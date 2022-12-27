@@ -1,6 +1,7 @@
 #Include "../Utility/MyMap.ahk"
 #Include "./Map/Desert.ahk"
 #Include "./Map/Cliff.ahk"
+#Include "./Map/River.ahk"
 
 global AppTitle := "octopath"
 global UniqueID := WinExist(AppTitle)
@@ -15,6 +16,7 @@ global MapDefineds := MyMap()
 
 MapDefineds.Extends(DesertMap.Maps)
 MapDefineds.Extends(CliffMap.Maps)
+MapDefineds.Extends(RiverMap.Maps)
 
 Return
 
@@ -243,14 +245,6 @@ DetectMap() {
         If (IsColorRoad(color) and IsColorRoad(color2)
             and IsColorRoad(color3) and IsColorRoad(color4))
             MapType := "MapOceanLv23v2"
-            
-        color := PixelGetColor(742, 278)
-        color2 := PixelGetColor(814, 726)
-        color3 := PixelGetColor(817, 630)
-        color4 := PixelGetColor(1150, 271)
-        If (IsColorRoad(color) and IsColorRoad(color2)
-            and IsColorRoad(color3) and IsColorRoad(color4))
-            MapType := "MapRiverLv37"
         
     }
 
@@ -781,24 +775,6 @@ MapCliffLv32() {
     }
     Sleep(3000)
 }
-MapRiverLv37() {
-    color := PixelGetColor(373, 849)
-    If ((color & 0xF0F0F0) != 0xF0F0F0 )
-        Return
-
-    Click(1558, 223)
-    Sleep(1000)
-    color := PixelGetColor(742, 278)
-    If (color == 0x909090)
-    {
-        Click(742, 278)
-    }
-    else
-    {
-        Click(814, 726)
-    }
-    Sleep(3000)
-}
 
 IsAppCrash() {
     color := PixelGetColor(212, 204)
@@ -934,9 +910,6 @@ IsAppCrash() {
                 Case "MapOceanLv23v2":
                     ; 海岸之地區域-奧爾薩島
                     MapOceanLv23v2()
-                Case "MapRiverLv37":
-                    ; 河流之地區域-通往積水洞窟的道路
-                    MapRiverLv37()
             }
 
             If MapDefineds.Has(MapType) {

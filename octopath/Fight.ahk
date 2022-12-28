@@ -3,6 +3,7 @@
 #Include "./Map/Cliff.ahk"
 #Include "./Map/River.ahk"
 #Include "./Map/Ocean.ahk"
+#Include "./Map/Plain.ahk"
 
 global AppTitle := "octopath"
 global UniqueID := WinExist(AppTitle)
@@ -19,6 +20,7 @@ MapDefineds.Extends(DesertMap.Maps)
 MapDefineds.Extends(CliffMap.Maps)
 MapDefineds.Extends(RiverMap.Maps)
 MapDefineds.Extends(OceanMap.Maps)
+MapDefineds.Extends(PlainMap.Maps)
 
 Return
 
@@ -91,6 +93,7 @@ DetectMap() {
         bAllRoad := True
         For pos In mapValue {
             If Not IsPosColorRoad(pos*) {
+                ; for debug
                 If mapKey = "MapCliffLv32" {
                     color := PixelGetColor(pos[1], pos[2])
                     TraceLog(mapKey ": " pos[1] ", " pos[2] " is not road, color=" color)
@@ -203,34 +206,6 @@ DetectMap() {
         color2 := PixelGetColor(433, 600)
         If (IsColorRoad(color) and IsColorRoad(color2))
             MapType := "MapIceLv18v2"
-            
-        color := PixelGetColor(633, 649)
-        color2 := PixelGetColor(964, 431)
-        If (IsColorRoad(color) and IsColorRoad(color2))
-            MapType := "MapPlainLv7"
-            
-        color := PixelGetColor(614, 410)
-        color2 := PixelGetColor(1292, 662)
-        color3 := PixelGetColor(1038, 425)
-        color4 := PixelGetColor(733, 601)
-        If (IsColorRoad(color) and IsColorRoad(color2)
-            and IsColorRoad(color3) and IsColorRoad(color4))
-            MapType := "MapPlainLv9"
-            
-        color := PixelGetColor(522, 867)
-        color2 := PixelGetColor(992, 303)
-        If (IsColorRoad(color) and IsColorRoad(color2))
-            MapType := "MapPlainLv11"
-            
-        color := PixelGetColor(1254, 607)
-        color2 := PixelGetColor(986, 596)
-        If (IsColorRoad(color) and IsColorRoad(color2))
-            MapType := "MapPlainLv12"
-            
-        color := PixelGetColor(725, 686)
-        color2 := PixelGetColor(770, 457)
-        If (IsColorRoad(color) and IsColorRoad(color2))
-            MapType := "MapPlainLv20"
             
     }
 
@@ -599,132 +574,6 @@ MapIceLv18v2() {
     }
     Sleep(3000)
 }
-MapPlainLv7() {
-    color := PixelGetColor(373, 849)
-    If ((color & 0xF0F0F0) != 0xF0F0F0 )
-        Return
-
-    Click(1558, 223)
-    Sleep(1000)
-    color := PixelGetColor(633, 649)
-    If (color == 0x909090)
-    {
-        Click(633, 649)
-    }
-    else
-    {
-        Click(964, 431)
-    }
-    Sleep(3000)
-}
-MapPlainLv9() {
-    color := PixelGetColor(373, 849)
-    If ((color & 0xF0F0F0) != 0xF0F0F0 )
-        Return
-
-    Click(1558, 223)
-    Sleep(1000)
-    color := PixelGetColor(614, 410)
-    If (color == 0x909090)
-    {
-        Click(614, 410)
-    }
-    else
-    {
-        Click(1292, 662)
-    }
-    Sleep(3000)
-}
-MapPlainLv11() {
-    color := PixelGetColor(373, 849)
-    If ((color & 0xF0F0F0) != 0xF0F0F0 )
-        Return
-
-    Click(1558, 223)
-    Sleep(1000)
-    color := PixelGetColor(522, 867)
-    If (color == 0x909090)
-    {
-        Click(522, 867)
-    }
-    else
-    {
-        Click(992, 303)
-    }
-    Sleep(3000)
-}
-MapPlainLv12() {
-    color := PixelGetColor(373, 849)
-    If ((color & 0xF0F0F0) != 0xF0F0F0 )
-        Return
-
-    Click(1558, 223)
-    Sleep(1000)
-    color := PixelGetColor(1254, 607)
-    If (color == 0x909090)
-    {
-        Click(1254, 607)
-    }
-    else
-    {
-        Click(986, 596)
-    }
-    Sleep(3000)
-}
-MapPlainLv20() {
-    color := PixelGetColor(373, 849)
-    If ((color & 0xF0F0F0) != 0xF0F0F0 )
-        Return
-
-    Click(1558, 223)
-    Sleep(1000)
-    color := PixelGetColor(725, 686)
-    If (color == 0x909090)
-    {
-        Click(725, 686)
-    }
-    else
-    {
-        Click(770, 457)
-    }
-    Sleep(3000)
-}
-MapCliffLv30() {
-    color := PixelGetColor(373, 849)
-    If ((color & 0xF0F0F0) != 0xF0F0F0 )
-        Return
-
-    Click(1558, 223)
-    Sleep(1000)
-    color := PixelGetColor(926, 334)
-    If (color == 0x909090)
-    {
-        Click(926, 334)
-    }
-    else
-    {
-        Click(1038, 782)
-    }
-    Sleep(3000)
-}
-MapCliffLv32() {
-    color := PixelGetColor(373, 849)
-    If ((color & 0xF0F0F0) != 0xF0F0F0 )
-        Return
-
-    Click(1558, 223)
-    Sleep(1000)
-    color := PixelGetColor(950, 414)
-    If (color == 0x909090)
-    {
-        Click(950, 414)
-    }
-    else
-    {
-        Click(854, 848)
-    }
-    Sleep(3000)
-}
 
 IsAppCrash() {
     color := PixelGetColor(212, 204)
@@ -839,21 +688,6 @@ IsAppCrash() {
                 Case "MapIceLv18v2":
                     ; 冰雪之地區域-泰塔斯大聖堂
                     MapIceLv18v2()
-                Case "MapPlainLv7":
-                    ; 平原之地區域-希亞特珀利斯平原
-                    MapPlainLv7()
-                Case "MapPlainLv9":
-                    ; 平原之地區域-北希亞特珀利斯平原
-                    MapPlainLv9()
-                Case "MapPlainLv11":
-                    ; 平原之地區域-大劇場-練習場
-                    MapPlainLv11()
-                Case "MapPlainLv12":
-                    ; 平原之地區域-聖火騎士駐地
-                    MapPlainLv12()
-                Case "MapPlainLv20":
-                    ; 平原之地區域-大劇場-後台
-                    MapPlainLv20()
             }
 
             If MapDefineds.Has(MapType) {

@@ -2,6 +2,7 @@
 #Include "./Map/Desert.ahk"
 #Include "./Map/Cliff.ahk"
 #Include "./Map/River.ahk"
+#Include "./Map/Ocean.ahk"
 
 global AppTitle := "octopath"
 global UniqueID := WinExist(AppTitle)
@@ -17,6 +18,7 @@ global MapDefineds := MyMap()
 MapDefineds.Extends(DesertMap.Maps)
 MapDefineds.Extends(CliffMap.Maps)
 MapDefineds.Extends(RiverMap.Maps)
+MapDefineds.Extends(OceanMap.Maps)
 
 Return
 
@@ -230,22 +232,6 @@ DetectMap() {
         If (IsColorRoad(color) and IsColorRoad(color2))
             MapType := "MapPlainLv20"
             
-        color := PixelGetColor(536, 402)
-        color2 := PixelGetColor(659, 861)
-        color3 := PixelGetColor(664, 677)
-        color4 := PixelGetColor(822, 488)
-        If (IsColorRoad(color) and IsColorRoad(color2)
-            and IsColorRoad(color3) and IsColorRoad(color4))
-            MapType := "MapOceanLv23"
-            
-        color := PixelGetColor(625, 701)
-        color2 := PixelGetColor(676, 320)
-        color3 := PixelGetColor(838, 410)
-        color4 := PixelGetColor(1058, 562)
-        If (IsColorRoad(color) and IsColorRoad(color2)
-            and IsColorRoad(color3) and IsColorRoad(color4))
-            MapType := "MapOceanLv23v2"
-        
     }
 
     ; close map
@@ -703,42 +689,6 @@ MapPlainLv20() {
     }
     Sleep(3000)
 }
-MapOceanLv23() {
-    color := PixelGetColor(373, 849)
-    If ((color & 0xF0F0F0) != 0xF0F0F0 )
-        Return
-
-    Click(1558, 223)
-    Sleep(1000)
-    color := PixelGetColor(536, 402)
-    If (color == 0x909090)
-    {
-        Click(536, 402)
-    }
-    else
-    {
-        Click(659, 861)
-    }
-    Sleep(3000)
-}
-MapOceanLv23v2() {
-    color := PixelGetColor(373, 849)
-    If ((color & 0xF0F0F0) != 0xF0F0F0 )
-        Return
-
-    Click(1558, 223)
-    Sleep(1000)
-    color := PixelGetColor(625, 701)
-    If (color == 0x909090)
-    {
-        Click(625, 701)
-    }
-    else
-    {
-        Click(676, 320)
-    }
-    Sleep(3000)
-}
 MapCliffLv30() {
     color := PixelGetColor(373, 849)
     If ((color & 0xF0F0F0) != 0xF0F0F0 )
@@ -904,12 +854,6 @@ IsAppCrash() {
                 Case "MapPlainLv20":
                     ; 平原之地區域-大劇場-後台
                     MapPlainLv20()
-                Case "MapOceanLv23":
-                    ; 海岸之地區域-利布爾泰德海道
-                    MapOceanLv23()
-                Case "MapOceanLv23v2":
-                    ; 海岸之地區域-奧爾薩島
-                    MapOceanLv23v2()
             }
 
             If MapDefineds.Has(MapType) {

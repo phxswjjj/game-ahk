@@ -30,12 +30,16 @@ QuestTalkContinue()
 
     pos2 := [1738, 736]
     color2 := PixelGetColor(pos2*)
-
+    
     pos3 := [1682, 75]
     color3 := PixelGetColor(pos3*)
+
+    pos4 := [1810, 1014]
+    color4 := PixelGetColor(pos4*)
     If ((color & 0x202020) = 0x202020
         and (color2 & 0xE0E0E0) = 0xE0E0E0
-        and color3 != 0xFFFFFF) {
+        and color3 != 0xFFFFFF
+        and color4 != 0xF2F2F2) {
         TraceLog("QuestTalkContinue")
         Click(pos*)
         Sleep(300)
@@ -71,9 +75,9 @@ WaitQuestStart()
             Sleep(300)
             Return True
         }
-
+        
         ; 同一個位置顏色維持幾秒沒改變，接新任務
-        pos2 := [640, 929]
+        pos2 := [637, 911]
         color2 := PixelGetColor(pos2*)
         If WaitQuestStart_color != color2 {
             WaitQuestStart_color := color2
@@ -100,16 +104,30 @@ WaitQuestStart()
 }
 
 QuestSelect() {
-    pos := [519, 734]
+    pos := [539, 689]
     color := PixelGetColor(pos*)
 
     pos2 := [693, 941]
     color2 := PixelGetColor(pos2*)
-    If (color = 0xFFD223 
+    If (color = 0x212121 
         and color2 = 0xEE7046) {
         TraceLog("QuestSelect")
-        Click(701, 836)
+        Click(694, 839)
         Sleep(300)
+        Return True
+    }
+    Return False
+}
+
+ExexuteBuff() {
+    pos := [1342, 928]
+    color := PixelGetColor(pos*)
+    If color = 0xEEDD00 {
+        TraceLog("ExexuteBuff")
+        Click(pos*)
+        Sleep(300)
+        Click(pos*)
+        Sleep(3000)
         Return True
     }
     Return False
@@ -124,8 +142,11 @@ QuestSelect() {
     {
         WinActivate(UniqueID)
 
-        If ClearQuestCompleted()
+        If ClearQuestCompleted() {
+            Sleep(2000)
+            ExexuteBuff()
             Continue
+        }
 
         If WaitQuestStart()
             Continue
@@ -133,6 +154,7 @@ QuestSelect() {
             Continue
         If QuestTalkAccept()
             Continue
+            
         If QuestSelect()
             Continue
 
